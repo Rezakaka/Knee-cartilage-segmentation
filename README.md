@@ -1,6 +1,7 @@
 # Knee-cartilage-segmentation
 Swin UNETR segmentation with automated geometry filtering for biomechanical modeling of knee joint cartilage
 # YouTube tutorial
+How to use the segmetation models:
 https://www.youtube.com/watch?v=jeRuuHDBgW0&t=175s
 
 # Data
