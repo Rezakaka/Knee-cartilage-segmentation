@@ -1,0 +1,9 @@
+#Please refer to https://data.mendeley.com/datasets/dc832g7j5m/1 to download the segmentation models.
+
+#For OAI MRIs please refer to https://nda.nih.gov/oai/ (please email the website to request the dataset)
+The paths for the images that we used are in oai_mri_paths.txt. 
+
+#There is a YouTube video on how to use the segmentation models: https://www.youtube.com/watch?v=jeRuuHDBgW0&t=175s
+This video is about bone segmentation which was our previous study. However, the steps are exactly the same for cartilage segmentation.
+
+Please also use our GitHub repository for any updates: https://github.com/Rezakaka/Knee-cartilage-segmentation
