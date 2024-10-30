@@ -1,8 +1,7 @@
 #Knee-cartilage-segmentation
 #Swin UNETR segmentation with automated geometry filtering for biomechanical modeling of knee joint cartilage
 
-*Please use the "predict" folder to use our trained models (in 'FC_models' and 'TC_models' folders) for predicting
-femoral and tibial cartilage 
+*Please use the "predict" folder to use our trained models (in 'FC_models' and 'TC_models' folders at https://data.mendeley.com/datasets/dc832g7j5m/1) for predicting femoral and tibial cartilage 
 
 *Please use the "codes" folder if you intend to use your own dataset and train your own models. 
 
