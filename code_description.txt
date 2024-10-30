@@ -69,3 +69,32 @@ Saving Predictions:
 Adjusts the prediction resolution to match the original MRI dimensions.
 Converts the prediction array to DICOM format with specified image origin and spacing.
 Saves each prediction as a DICOM file with a unique name.
+
+Auto_Filter.py
+This module implements a pipeline for filtering segmented cartilage geometries and performing rigid registration of these geometries against reference models. The process utilizes the PyMeshLab and Open3D libraries for mesh processing and point cloud handling.
+Functionality
+1. Mesh Filtering and Cleaning
+The filtering(ms, first_num_samp, sec_num_samp, trd_num_samp) function performs the following operations:
+Cleaning and Repairing:
+Merges close vertices and texture coordinates.
+Removes duplicate faces and vertices.
+Removes null faces, folded faces, and unreferenced vertices.
+Repairs non-manifold edges and vertices.
+These operations help improve the quality of the mesh, ensuring that it is suitable for further processing.
+Sampling and Reconstruction:
+Generates a Monte Carlo sampling to obtain a refined surface representation.
+Applies Poisson disk sampling for more uniform point distribution.
+Uses screened Poisson reconstruction to create a smoother surface.
+Smoothing:
+Applies Laplacian smoothing to preserve surface features.
+Uses an unsharp mask filter for enhancing mesh details.
+2. Rigid Registration
+The rigid registration process aligns the filtered cartilage meshes with a target mesh using the cpd_rigid(Y, X) function, which implements the Coherent Point Drift (CPD) algorithm. The registration involves the following steps:
+Initialization:
+Computes initial estimates for the mean and variance of the source and target point clouds.
+Expectation-Maximization:
+Alternates between estimating the correspondence of points and maximizing the transformation parameters (rotation, scaling, translation).
+Transformation Application:
+Applies the computed rigid transformation to the source mesh to align it with the target mesh.
+3. File Handling
+The script processes STL files from specified directories and saves the filtered and registered meshes. Users can configure the input and output paths for the original and processed meshes.
