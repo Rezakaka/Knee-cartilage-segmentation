@@ -70,7 +70,7 @@ Adjusts the prediction resolution to match the original MRI dimensions.
 Converts the prediction array to DICOM format with specified image origin and spacing.
 Saves each prediction as a DICOM file with a unique name.
 
-Auto_Filter.py
+Auto_Filter.ipynb
 This module implements a pipeline for filtering segmented cartilage geometries and performing rigid registration of these geometries against reference models. The process utilizes the PyMeshLab and Open3D libraries for mesh processing and point cloud handling.
 Functionality
 1. Mesh Filtering and Cleaning
