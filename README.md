@@ -8,6 +8,7 @@ https://www.youtube.com/watch?v=jeRuuHDBgW0&t=175s
 Please refer to https://data.mendeley.com/datasets/dc832g7j5m/1 to download the models
 
 For OAI MRIs please refer to https://nda.nih.gov/oai/ (please email the website to request the dataset)
+
 The paths for the images that we used are in oai_mri_paths.txt. 
 
 # Paper
