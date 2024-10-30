@@ -1,0 +1,84 @@
+#Knee-cartilage-segmentation
+#Swin UNETR segmentation with automated geometry filtering for biomechanical modeling of knee joint cartilage
+
+*Please use the "predict" folder to use our trained models (in 'FC_models' and 'TC_models' folders) for predicting
+femoral and tibial cartilage 
+
+*Please use the "codes" folder if you intend to use your own dataset and train your own models. 
+
+* In both "predict" and "codes" folders, there are three python files as: config.py, dataset.py and utility.py.
+*config.py
+	This file sets up global configuration parameters for the project, defining important variables for model training and data 	processing, including:
+	Device Selection: Determines if computations run on GPU (cuda) or CPU.
+	Hyperparameters: Includes batch size, learning rate, and maximum number of training epochs.
+	Image Dimensions: Specifies dimensions for cropping and resizing images.
+	Training Options: Includes parameters like the number of folds for cross-validation and tolerance for early stopping.
+	These configurations make the training pipeline customizable and ensure consistency across different scripts.
+
+*dataset.py
+	This file defines the KneeDataset class, a custom PyTorch dataset class for handling knee MRI images and their segmentation 	masks. It includes:
+	Transforms: Applies data augmentation and preprocessing steps using MONAI, such as resizing, cropping, and intensity 	normalization.
+	Data Loading: Uses nibabel to load 3D MRI images and segmentation masks, converts them to a consistent orientation, and 	formats them as PyTorch tensors.
+	By standardizing image processing, dataset.py prepares input data for both training and validation, supporting effective 	model training.
+
+*utility.py
+	This file provides helper functions for image adjustment and metric calculation:
+	window_center_adjustment: Adjusts the image intensity range to enhance contrast, preparing images for model input.
+	dice_loss: Computes the Dice loss to measure overlap accuracy between predicted and true segmentation masks.
+	calculate_metrics: Computes precision, recall, and F1 score using a confusion matrix to evaluate model performance on 	binary segmentation tasks.
+	These functions support model evaluation by normalizing input data and calculating essential segmentation metrics.
+
+*run.py - Main Training Script
+	The run.py file is the central script that brings together configurations, datasets, and utility functions to train, 	validate, and evaluate the Swin UNETR-based model the segmentation. It leverages config.py for hyperparameters and system 	configurations, dataset.py for handling the MRI datasets, and utility.py for image processing and evaluation metrics.
+
+	Key Components and Workflow
+	Imports and Configurations:
+
+	Imports necessary libraries and modules.
+	Loads model configurations from config.py, including settings like crop sizes, learning rates, and device preferences.
+	Data Preparation:
+
+	Calls store_folds() to organize the MRI images into training and validation sets using K-Fold cross-validation.
+	Converts MRI images and segmentation masks into patches if required, using functions from utility.py for processing.
+	Model Initialization and Training:
+
+	Initializes the Swin UNETR model with pretrained weights if available.
+	Defines the loss function as a combination of dice loss (from utility.py) and focal loss to handle class imbalance.
+	Uses the train_one_epoch() and valid_one_epoch() functions to handle the training and validation for each epoch and tracks 	metrics like precision, recall, and F1-score.
+	Checkpoints and Logging:
+
+	Saves model checkpoints after each epoch if performance improves.
+	Logs metrics and model performance with TensorBoard for visualization.
+	Supports resuming from checkpoints to continue training from the last saved state.
+	Evaluation and Results:
+
+	After training, outputs the best metrics for each fold into a text file.
+	Models are saved as checkpoints in the specified model path directory for later testing or further training.
+
+*predict.py 
+	This script utilizes a pre-trained SwinUNETR model to segment cartilage regions in MRI images. It loads the model, 	processes MRI images, and outputs segmentation predictions, saving them in DICOM format for further analysis.
+
+	File Purpose
+	The script predicts cartilage regions in MRI images based on trained models. It performs the following:
+
+	Model Setup and Loading:
+
+	Initializes a SwinUNETR segmentation model.
+	Loads the model weights from a specified file path.
+	Prediction Process:
+
+	Loads a test MRI image (or batch of images) from a specified path.
+	Passes the MRI images through the model to generate cartilage predictions.
+	Uses a combination of sigmoid activation and thresholding to finalize binary segmentation masks.
+	Visualization:
+
+	Displays the MRI images alongside the predictions using Matplotlib.
+	Displays three views:
+	The original MRI slice.
+	The prediction mask.
+	An overlay of the prediction contour on the MRI slice for easy comparison.
+	Saving Predictions:
+
+	Adjusts the prediction resolution to match the original MRI dimensions.
+	Converts the prediction array to DICOM format with specified image origin and spacing.
+	Saves each prediction as a DICOM file with a unique name.
